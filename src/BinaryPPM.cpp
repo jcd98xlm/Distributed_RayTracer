@@ -80,15 +80,15 @@ void DBRT::BinaryPPM::bufferToImageFormat(const std::vector<Color3f> &buffer)
 {
     // Calcula valor maximo presente no buffer
     float max = computeMaxValues(buffer);
-    std::clog << "Float maxValue = " << max << "  buffer[50] = " << buffer.at(50)[0] << "," << buffer.at(50)[1] << "," << buffer.at(50)[2] << "\n";
+    //std::clog << "Float maxValue = " << max << "  buffer[50] = " << buffer.at(50)[0] << "," << buffer.at(50)[1] << "," << buffer.at(50)[2] << "\n";
     for(unsigned int i=0; i < this->height*this->width; i++)
     {
-        /* this->pixelData.at(i).r = static_cast<uint8_t>((buffer.at(i)[0] /max) * 255);
+        this->pixelData.at(i).r = static_cast<uint8_t>((buffer.at(i)[0] /max) * 255);
         this->pixelData.at(i).g = static_cast<uint8_t>((buffer.at(i)[1] /max) * 255);
-        this->pixelData.at(i).b = static_cast<uint8_t>((buffer.at(i)[2] /max) * 255); */
-        this->pixelData.at(i).r = static_cast<uint8_t>((buffer.at(i)[0]) * 255);
+        this->pixelData.at(i).b = static_cast<uint8_t>((buffer.at(i)[2] /max) * 255);
+/*         this->pixelData.at(i).r = static_cast<uint8_t>((buffer.at(i)[0]) * 255);
         this->pixelData.at(i).g = static_cast<uint8_t>((buffer.at(i)[1]) * 255);
-        this->pixelData.at(i).b = static_cast<uint8_t>((buffer.at(i)[2]) * 255);
+        this->pixelData.at(i).b = static_cast<uint8_t>((buffer.at(i)[2]) * 255); */
         //std::clog << "PixelData at " << i << " =>  r=" << static_cast<int>(this->pixelData.at(i).r) << " g=" << static_cast<int>(this->pixelData.at(i).g) << " b=" << static_cast<int>(this->pixelData.at(i).b) << "\n";
     }
     //std::clog << "PixelValue final buffer[115520] = " << pixelData.at(115520).r << "," << pixelData.at(115520).g << "," << pixelData.at(115520).b << "\n";

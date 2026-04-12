@@ -27,6 +27,11 @@ std::vector<std::shared_ptr<DBRT::LightSource>> &DBRT::Scene::getLightList()
     return this->sceneLightList;
 }
 
+Color3f &DBRT::Scene::getBackgroundColor()
+{
+    return this->backgroundColor;
+}
+
 bool DBRT::Scene::generateScene(const std::string &fileName)
 {
     std::string line;

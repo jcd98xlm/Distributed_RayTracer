@@ -90,19 +90,19 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
             {
                 // Calcular a intensidade da iluminacao
                 float intensity;
-                Color3f color;
+                Color3f lcolor;
                 float red = 0.0, green = 0.0, blue = 0.0;
                 bool validIllum = false;
                 bool illumFound = false;
                 for(auto currentLight : this->scene.getLightList())
                 {
-                    validIllum = currentLight->computeIllumination(closestIntersectionPoint, closestLocalNormal, this->scene.getObjectList(), closestObject, color, intensity);
+                    validIllum = currentLight->computeIllumination(closestIntersectionPoint, closestLocalNormal, this->scene.getObjectList(), closestObject, lcolor, intensity);
                     if(validIllum)
                     {
                         illumFound = true;
-                        red += color[0]*intensity;
-                        green += color[1]*intensity;
-                        blue += color[2]*intensity;
+                        red += (lcolor[0]*intensity)/255.0;
+                        green += (lcolor[1]*intensity)/255.0;
+                        blue += (lcolor[2]*intensity)/255.0;
 
                         if((ySize - y -1)*xSize + x == 115520)
                         {
@@ -122,6 +122,13 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
                     //outputImage.pixelData.at((ySize - y - 1)*xSize + x) = Color3f{red, green, blue};
                     //outputImage.pixelData.at((ySize - y - 1)*xSize + x).setPixelRGB(static_cast<uint8_t>(red), static_cast<uint8_t>(green), static_cast<uint8_t>(blue));
                     //outputImage.pixelData.at((ySize - y -1)*xSize + x).setPixelRGB(static_cast<uint8_t>(localColor[0]*intensity), static_cast<uint8_t>(localColor[1]*intensity), static_cast<uint8_t>(localColor[2]*intensity));
+                }
+                else
+                {
+                    Color3f bckColor = this->scene.getBackgroundColor();
+                    imgBuffer.at((ySize - y - 1)*xSize + x)[0] = bckColor[0];
+                    imgBuffer.at((ySize - y - 1)*xSize + x)[1] = bckColor[1];
+                    imgBuffer.at((ySize - y - 1)*xSize + x)[2] = bckColor[2];
                 }
             }
         }

@@ -21,6 +21,7 @@ namespace DBRT
             DBRT::Camera& getCamera();
             std::vector<std::shared_ptr<DBRT::GeometricObject>>& getObjectList();
             std::vector<std::shared_ptr<DBRT::LightSource>>& getLightList();
+            Color3f& getBackgroundColor();
             //bool render(ImageFile &outputImage);
             bool generateScene(const std::string &fileName);
 

@@ -14,12 +14,12 @@ int main()
     //DBRT::Scene testScene;
     //DBRT::BinaryPPM imgFile(1280, 720);
     DBRT::BinaryPPM imgFile(640, 360);  // 16:9
-    std::clog << "Antes de renderizar a imagem\n";
+    //std::clog << "Antes de renderizar a imagem\n";
     renderer.render(imgFile);
     //testScene.render(imgFile);
-    std::clog << "Apos renderizar a imagem\n";
+    //std::clog << "Apos renderizar a imagem\n";
     //imgFile.writeImageFile("rayTracingEsfera.ppm");
-    std::clog << "Imagem escrita no arquivo com sucesso\n";
+    //std::clog << "Imagem escrita no arquivo com sucesso\n";
 
     return 0;
 }
