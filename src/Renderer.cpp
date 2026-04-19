@@ -9,11 +9,6 @@ DBRT::Renderer::Renderer(const std::string &fileName)
 
     std::clog << "---------------- Criando a cena ----------------\n";
     this->scene.generateScene(fileName);
-    //this->scene = new DBRT::Scene();
-    // TODO: permitir criacao da cena a partir da leitura de um arquivo de descricao
-
-    std::clog << "--------------- Criando a imagem ---------------\n";
-    //this->outputImage = new DBRT::BinaryPPM();
     std::clog << "------------------------------------------------\n";
 }
 
@@ -23,6 +18,7 @@ DBRT::Renderer::~Renderer()
 
 bool DBRT::Renderer::render(ImageFile &outputImage)
 {
+    std::clog << "--------------- Criando a imagem ---------------\n";
     auto stamp = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration;
 
@@ -41,13 +37,10 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
     // Pre-calcular fatores de escala para as coordenadas
     float xScaleFactor = 2.0/static_cast<float>(xSize);
     float yScaleFactor = 2.0/static_cast<float>(ySize);
-    //float minDist = 1e6;
-    //float maxDist = 0.0;
+    //float minDist = 1e6, maxDist = 0.0;
     for(unsigned int y=0; y<ySize; y++)
-    //for(unsigned int x=0; x<xSize; x++)
     {
         for(unsigned int x=0; x<xSize; x++)
-        //for(unsigned int y=0; y<ySize; y++)
         {
             // Normalizar as coordenadas x e y
             float normalizedX = (static_cast<float>(x)*xScaleFactor) - 1.0;
@@ -60,7 +53,7 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
             // Testar interseccao com todos os objetos da cena
             std::shared_ptr<GeometricObject> closestObject;
             Vec3f closestIntersectionPoint, closestLocalNormal, closestLocalColor;
-            double minDist = 1e6;
+            double minDist = __DBL_MAX__;
             bool intersectionFound = false;
             for(auto currentObject : this->scene.getObjectList())
             {
@@ -100,14 +93,9 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
                     if(validIllum)
                     {
                         illumFound = true;
-                        red += (lcolor[0]*intensity)/255.0;
-                        green += (lcolor[1]*intensity)/255.0;
-                        blue += (lcolor[2]*intensity)/255.0;
-
-                        if((ySize - y -1)*xSize + x == 115520)
-                        {
-                            std::clog << "Pos xy [" << x << "," << y << "] - Red green blue :" << red << "," << green << "," << blue << "\n";                            
-                        }
+                        red += (lcolor[0]*intensity);
+                        green += (lcolor[1]*intensity);
+                        blue += (lcolor[2]*intensity);
                     }
                 }
                 
@@ -119,30 +107,36 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
                     imgBuffer.at((ySize - y - 1)*xSize + x)[0] = red;
                     imgBuffer.at((ySize - y - 1)*xSize + x)[1] = green;
                     imgBuffer.at((ySize - y - 1)*xSize + x)[2] = blue;
-                    //outputImage.pixelData.at((ySize - y - 1)*xSize + x) = Color3f{red, green, blue};
-                    //outputImage.pixelData.at((ySize - y - 1)*xSize + x).setPixelRGB(static_cast<uint8_t>(red), static_cast<uint8_t>(green), static_cast<uint8_t>(blue));
-                    //outputImage.pixelData.at((ySize - y -1)*xSize + x).setPixelRGB(static_cast<uint8_t>(localColor[0]*intensity), static_cast<uint8_t>(localColor[1]*intensity), static_cast<uint8_t>(localColor[2]*intensity));
                 }
                 else
                 {
-                    Color3f bckColor = this->scene.getBackgroundColor();
-                    imgBuffer.at((ySize - y - 1)*xSize + x)[0] = bckColor[0];
-                    imgBuffer.at((ySize - y - 1)*xSize + x)[1] = bckColor[1];
-                    imgBuffer.at((ySize - y - 1)*xSize + x)[2] = bckColor[2];
+                    red = closestLocalColor[0]*intensity;
+                    green = closestLocalColor[1]*intensity;
+                    blue = closestLocalColor[2]*intensity;
+                    imgBuffer.at((ySize - y - 1)*xSize + x)[0] = red;
+                    imgBuffer.at((ySize - y - 1)*xSize + x)[1] = green;
+                    imgBuffer.at((ySize - y - 1)*xSize + x)[2] = blue;
                 }
+            }
+            else
+            {
+                Color3f bckColor = this->scene.getBackgroundColor();
+                imgBuffer.at((ySize - y - 1)*xSize + x)[0] = bckColor[0];
+                imgBuffer.at((ySize - y - 1)*xSize + x)[1] = bckColor[1];
+                imgBuffer.at((ySize - y - 1)*xSize + x)[2] = bckColor[2];
             }
         }
     }
 
-    std::clog << "Cores da esfera do meio = " << this->scene.getObjectList().at(1)->baseColor << "\n";
-    std::clog << "ImgBuffer[115520] na cena = " << imgBuffer.at(115520) << "\n";
+    //std::clog << "Cores da esfera do meio = " << this->scene.getObjectList().at(1)->baseColor << "\n";
+    //std::clog << "ImgBuffer[115520] na cena = " << imgBuffer.at(115520) << "\n";
     // Passar o buffer da imagem para o objeto responsavel
     outputImage.bufferToImageFormat(imgBuffer);
     outputImage.writeImageFile("rayTracingEsfera.ppm");
 
-    //std::clog << "Minimun distance: " << minDist << "  Maximun distance: " << maxDist << "\n";
     duration = std::chrono::high_resolution_clock::now() - stamp;
-    std::cout << "\tTempo gasto para renderizar a cena: " << duration.count() << " s\n";
+    std::cout << "Tempo gasto para renderizar a cena: " << duration.count() << " s\n";
+    std::clog << "------------------------------------------------\n";
 
     return true;
 }
