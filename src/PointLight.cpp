@@ -18,39 +18,24 @@ bool DBRT::PointLight::computeIllumination(const Coord3f &intersectionPoint, con
     Vec3f lightDirection = (this->lightPosition - intersectionPoint).normalize();
     Coord3f startPoint = intersectionPoint;
 
-    // Cacular o angulo entre a normal local e o raio de luz, assumindo que a normal eh um vetor unitario
-    // a.b = |a|*|b|*cos(Theta), como ambos a e b sao unitarios logo a.b = 1*1*cos(Theta)
-    float angle = acosf(localNormal.dotProduct(lightDirection));
+    float cosTheta = localNormal.dotProduct(lightDirection);
 
-    // Se a normal nao esta apontada para a luz, entao nao temos iluminacao nesse ponto
-    // valor ref 1.5708 ou 1.2(meu) 5,89 1.89
-    double angleRef = 1.5708;
-    if(angle > angleRef)
+    // Se usarmos Lambertian shading temos L = kd*I*cos(theta) = kd*I*max(0,n*l)
+    // onde L eh a cor do pixel, kd eh o coeficiente difuso, I eh a intensidade da luz, n eh a normal, l eh a direcao da luz
+    float attenuation = (cosTheta > 0.0) ? cosTheta : 0.0;
+
+    if(attenuation > 0.0) 
     {
+        // Tem iluminacao nesse ponto
         color = this->lightColor;
-        intensity = 0.0;//0.0
-        return false;
-    }
-    else
-    {
-        color = this->lightColor;
-        //intensity = 1.0;
-        intensity = this->lightIntensity*(1.0 - (angle/angleRef));
+        intensity = this->lightIntensity*attenuation;
         return true;
     }
-    /*
-    double angleRef = 1.89;
-    if(angle > angleRef)
+    else
     {
         color = this->lightColor;
         intensity = 0.0;
         return false;
     }
-    else
-    {
-        color = this->lightColor;
-        intensity = this->lightIntensity*(1.0 - (angle/angleRef));
-        return true;
-    }
-    */
+    return false;
 }
