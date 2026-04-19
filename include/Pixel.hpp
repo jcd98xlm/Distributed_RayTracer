@@ -14,7 +14,7 @@ namespace DBRT
             PixelRGB(uint8_t _c) : r(_c), g(_c), b(_c) {}
             PixelRGB(uint8_t _r, uint8_t _g, uint8_t _b) : r(_r), g(_g), b(_b) {}
             ~PixelRGB() = default;
-            Color3f RGBToFloat(PixelRGB &pixel)
+            static Color3f RGBToFloat(const PixelRGB &pixel)
             {
                 Color3f color;
                 color[0] = std::max(0.0, std::min(1.0, pixel.r/255.0));
@@ -22,7 +22,7 @@ namespace DBRT
                 color[2] = std::max(0.0, std::min(1.0, pixel.b/255.0));
                 return color;
             }
-            PixelRGB floatToRGB(Color3f &color)
+            static PixelRGB floatToRGB(const Color3f &color)
             {
                 PixelRGB px;
                 px.r = std::max(0, std::min(255, static_cast<int>(color[0]*255)));

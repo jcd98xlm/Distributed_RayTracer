@@ -4,8 +4,7 @@
 #include <chrono>
 
 DBRT::Scene::Scene()
-{
-    
+{    
 }
 
 DBRT::Scene::~Scene()
