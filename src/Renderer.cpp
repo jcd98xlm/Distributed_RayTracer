@@ -97,6 +97,12 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
                         green += (lcolor[1]*intensity);
                         blue += (lcolor[2]*intensity);
                     }
+                    else
+                    {
+                        red += (lcolor[0]*intensity);
+                        green += (lcolor[1]*intensity);
+                        blue += (lcolor[2]*intensity);
+                    }
                 }
                 
                 if(illumFound)

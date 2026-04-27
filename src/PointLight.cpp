@@ -18,6 +18,32 @@ bool DBRT::PointLight::computeIllumination(const Coord3f &intersectionPoint, con
     Vec3f lightDirection = (this->lightPosition - intersectionPoint).normalize();
     Coord3f startPoint = intersectionPoint;
 
+    // Construir um raio de sombreamento, ou shadow ray
+    Ray shadowRay(intersectionPoint,lightDirection);
+    Coord3f shadowIntersectionPoint;
+    Vec3f shadowLocalNormal;
+    Color3f shadowColor;
+
+    // Testar se a luz e visivel do ponto de interseccao
+    for(auto otherObjects : objectList)
+    {
+        // Ignora objeto atual para evitar auto interseccao
+        if(otherObjects != currentObject)
+        {
+            bool hit = otherObjects->testIntersection(shadowRay, shadowIntersectionPoint, shadowLocalNormal, shadowColor);
+            if(hit)
+            {
+                // Se atingiu outro objeto, entao esta na sombra (assumindo que existam apenas objetos opacos por enquanto)
+                color = this->lightColor;
+                intensity = 0.0;
+                return false;
+            }
+        }
+        //else
+            //std::cerr << "Testei comigo mesmo\n";
+    }
+
+    // Se a luz nao esta bloqueada, calculamos sua contribuicao
     float cosTheta = localNormal.dotProduct(lightDirection);
 
     // Se usarmos Lambertian shading temos L = kd*I*cos(theta) = kd*I*max(0,n*l)
