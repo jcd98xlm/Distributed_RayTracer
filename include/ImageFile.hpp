@@ -14,8 +14,9 @@ namespace DBRT
         public:
             ImageFile();
             ImageFile(const unsigned int _width, const unsigned int _height);
+            ImageFile(const unsigned int _width, const unsigned int _height, const std::string &_fileName);
             ImageFile(const unsigned int _width, const unsigned int _height, std::vector<PixelRGB> &_pixels);
-            ImageFile(const unsigned int _width, const unsigned int _height, std::vector<PixelRGB> &_pixels, std::string &_fileName);
+            ImageFile(const unsigned int _width, const unsigned int _height, const std::string &_fileName, std::vector<PixelRGB> &_pixels);
             virtual ~ImageFile();
 
             const unsigned int getWidth() const;

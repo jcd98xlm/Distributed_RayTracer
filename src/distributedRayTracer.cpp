@@ -14,7 +14,7 @@ int main()
     //DBRT::Scene testScene;
     //DBRT::BinaryPPM imgFile(1280, 720);
     //DBRT::BinaryPPM imgFile(640, 360);  // 16:9
-    DBRT::BinaryPPM imgFile(1024, 576);  // 16:9
+    DBRT::BinaryPPM imgFile(1024, 576, "rayTracingEsfera.ppm");  // 16:9
     //std::clog << "Antes de renderizar a imagem\n";
     renderer.render(imgFile);
     //testScene.render(imgFile);

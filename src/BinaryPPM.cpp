@@ -7,7 +7,7 @@ DBRT::BinaryPPM::BinaryPPM()
 {
 }
 
-DBRT::BinaryPPM::BinaryPPM(const unsigned int _width, const unsigned int _height) : ImageFile(_width, _height)
+DBRT::BinaryPPM::BinaryPPM(const unsigned int _width, const unsigned int _height, const std::string &_fileName) : ImageFile(_width, _height, _fileName)
 {
 }
 

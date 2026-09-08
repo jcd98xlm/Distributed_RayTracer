@@ -136,7 +136,8 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
 
     // Passar o buffer da imagem para o objeto responsavel
     outputImage.bufferToImageFormat(imgBuffer);
-    outputImage.writeImageFile("rayTracingEsfera.ppm");
+    //outputImage.writeImageFile("rayTracingEsfera.ppm");
+    outputImage.writeImageFile();
 
     duration = std::chrono::high_resolution_clock::now() - stamp;
     std::cout << "Tempo gasto para renderizar a cena: " << duration.count() << " s\n";

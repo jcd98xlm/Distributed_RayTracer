@@ -9,7 +9,7 @@ namespace DBRT
     {
         public:
             BinaryPPM();
-            BinaryPPM(const unsigned int _width, const unsigned int _height);
+            BinaryPPM(const unsigned int _width, const unsigned int _height, const std::string &_fileName);
             virtual bool readImageFile(const std::string &fileName) override;
             virtual void writeImageFile() const override;
             virtual void writeImageFile(const std::string &fileName) const override;
