@@ -13,6 +13,10 @@ DBRT::ImageFile::ImageFile(const unsigned int _width, const unsigned int _height
 {
 }
 
+DBRT::ImageFile::ImageFile(const unsigned int _width, const unsigned int _height, std::vector<PixelRGB> &_pixels, std::string &_fileName) : width(_width), height(_height), pixelData(_pixels), fileName(_fileName)
+{
+}
+
 DBRT::ImageFile::~ImageFile()
 {
 }

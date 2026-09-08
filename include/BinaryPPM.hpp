@@ -11,6 +11,7 @@ namespace DBRT
             BinaryPPM();
             BinaryPPM(const unsigned int _width, const unsigned int _height);
             virtual bool readImageFile(const std::string &fileName) override;
+            virtual void writeImageFile() const override;
             virtual void writeImageFile(const std::string &fileName) const override;
             virtual void bufferToImageFormat(const std::vector<Color3f> &buffer) override;
             //virtual void denormalizeColorRange() override;            

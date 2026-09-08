@@ -58,6 +58,24 @@ bool DBRT::BinaryPPM::readImageFile(const std::string &fileName)
     return true;
 }
 
+void DBRT::BinaryPPM::writeImageFile() const
+{
+    std::ofstream file(this->fileName, std::ios::binary);
+    if(!file)
+    {
+        // Erro
+    }
+
+    file << "P6\n" << this->width << " " << this->height << "\n255\n";
+    file.write(reinterpret_cast<const char *>(pixelData.data()), this->pixelData.size()*sizeof(PixelRGB));
+    //file.write(reinterpret_cast<const char *>(pixelData.data()), pixelData.size()*sizeof(Color3f));
+
+    if(!file)
+    {
+        // Erro
+    }
+}
+
 void DBRT::BinaryPPM::writeImageFile(const std::string &fileName) const
 {
     std::ofstream file(fileName, std::ios::binary);

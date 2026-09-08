@@ -134,8 +134,6 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
         }
     }
 
-    //std::clog << "Cores da esfera do meio = " << this->scene.getObjectList().at(1)->baseColor << "\n";
-    //std::clog << "ImgBuffer[115520] na cena = " << imgBuffer.at(115520) << "\n";
     // Passar o buffer da imagem para o objeto responsavel
     outputImage.bufferToImageFormat(imgBuffer);
     outputImage.writeImageFile("rayTracingEsfera.ppm");
