@@ -9,18 +9,23 @@
 
 int main()
 {
-    std::string sceneFileName = "scenes/testScene3.scndescr";
-    DBRT::Renderer renderer(sceneFileName);
-    //DBRT::Scene testScene;
-    //DBRT::BinaryPPM imgFile(1280, 720);
-    //DBRT::BinaryPPM imgFile(640, 360);  // 16:9
-    DBRT::BinaryPPM imgFile(1024, 576, "rayTracingEsfera.ppm");  // 16:9
-    //std::clog << "Antes de renderizar a imagem\n";
-    renderer.render(imgFile);
-    //testScene.render(imgFile);
-    //std::clog << "Apos renderizar a imagem\n";
-    //imgFile.writeImageFile("rayTracingEsfera.ppm");
-    //std::clog << "Imagem escrita no arquivo com sucesso\n";
+    // Programa de testes
+    std::string sceneFileName1 = "scenes/testScene1.scndescr";
+    std::string sceneFileName2 = "scenes/testScene2.scndescr";
+    std::string sceneFileName3 = "scenes/testScene3.scndescr";
+
+    // Tamanhos 16:9  1280*720  1024*576  640*360
+    DBRT::Renderer renderer(sceneFileName1);
+    DBRT::BinaryPPM imgFile1(1280, 720, "rayTracingEsfera1.ppm");  // 16:9
+    renderer.render(imgFile1);
+
+    DBRT::Renderer renderer2(sceneFileName2);
+    DBRT::BinaryPPM imgFile2(640, 480, "rayTracingEsfera2.ppm");  // 16:9
+    renderer2.render(imgFile2);
+
+    DBRT::Renderer renderer3(sceneFileName3);
+    DBRT::BinaryPPM imgFile3(1024, 576, "rayTracingEsfera3.ppm");  // 16:9
+    renderer3.render(imgFile3);
 
     return 0;
 }

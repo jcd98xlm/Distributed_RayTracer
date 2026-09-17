@@ -9,6 +9,7 @@ DBRT::Renderer::Renderer(const std::string &fileName)
 
     std::clog << "---------------- Criando a cena ----------------\n";
     this->scene.generateScene(fileName);
+    std::clog << "---------- " << fileName << " ----------\n";
     std::clog << "------------------------------------------------\n";
 }
 
@@ -89,6 +90,7 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
                 bool illumFound = false;
                 for(auto currentLight : this->scene.getLightList())
                 {
+                    // Calcular a contribuicao de cada fonte de luz
                     validIllum = currentLight->computeIllumination(closestIntersectionPoint, closestLocalNormal, this->scene.getObjectList(), closestObject, lcolor, intensity);
                     if(validIllum)
                     {

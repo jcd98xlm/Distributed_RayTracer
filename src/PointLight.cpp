@@ -14,12 +14,12 @@ DBRT::PointLight::~PointLight()
 
 bool DBRT::PointLight::computeIllumination(const Coord3f &intersectionPoint, const Coord3f &localNormal, const std::vector<std::shared_ptr<DBRT::GeometricObject>> &objectList, const std::shared_ptr<DBRT::GeometricObject> &currentObject, Color3f &color, float &intensity)
 {
-    // Contruir vetor do ponto de interseccao ate a fonte de luz
+    // Construir vetor do ponto de interseccao ate a fonte de luz
     Vec3f lightDirection = (this->lightPosition - intersectionPoint).normalize();
     Coord3f startPoint = intersectionPoint;
 
     // Construir um raio de sombreamento, ou shadow ray
-    Ray shadowRay(intersectionPoint,lightDirection);
+    Ray shadowRay(intersectionPoint, lightDirection);
     Coord3f shadowIntersectionPoint;
     Vec3f shadowLocalNormal;
     Color3f shadowColor;
