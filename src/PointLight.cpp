@@ -19,7 +19,7 @@ bool DBRT::PointLight::computeIllumination(const Coord3f &intersectionPoint, con
     Coord3f startPoint = intersectionPoint;
 
     // Construir um raio de sombreamento, ou shadow ray
-    Ray shadowRay(intersectionPoint, lightDirection);
+    Ray shadowRay(intersectionPoint, this->lightPosition);
     Coord3f shadowIntersectionPoint;
     Vec3f shadowLocalNormal;
     Color3f shadowColor;

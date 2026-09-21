@@ -53,7 +53,7 @@ bool DBRT::Sphere::testIntersection(const Ray &castRay, Coord3f &intersectionPoi
             localNormal = intersectionPoint - newObjOrigin;
             localNormal.normalize();
 
-            localColor = baseColor;
+            localColor = this->baseColor;
         }
         return true;        
     }

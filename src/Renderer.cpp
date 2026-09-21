@@ -118,9 +118,9 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
                 }
                 else
                 {
-                    red = closestLocalColor[0]*intensity;
-                    green = closestLocalColor[1]*intensity;
-                    blue = closestLocalColor[2]*intensity;
+                    red *= closestLocalColor[0];
+                    green *= closestLocalColor[1];
+                    blue *= closestLocalColor[2];
                     imgBuffer.at((ySize - y - 1)*xSize + x)[0] = red;
                     imgBuffer.at((ySize - y - 1)*xSize + x)[1] = green;
                     imgBuffer.at((ySize - y - 1)*xSize + x)[2] = blue;
