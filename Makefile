@@ -7,7 +7,7 @@ BUILD_DIR = build
 
 # Opcoes do compildador
 CC = g++ -std=c++20
-CC_FLAGS = -Wall -O3 -Iinclude -pg -fno-omit-frame-pointer
+CC_FLAGS = -Wall -O3 -Iinclude -g -fno-omit-frame-pointer
 
 SRCS = $(foreach dir,$(SRC_DIR),$(wildcard $(dir)/*.cpp))
 OBJS = $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRCS))

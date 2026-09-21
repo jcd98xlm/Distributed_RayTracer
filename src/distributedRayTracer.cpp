@@ -20,7 +20,7 @@ int main()
     renderer.render(imgFile1);
 
     DBRT::Renderer renderer2(sceneFileName2);
-    DBRT::BinaryPPM imgFile2(640, 480, "rayTracingEsfera2.ppm");  // 16:9
+    DBRT::BinaryPPM imgFile2(640, 360, "rayTracingEsfera2.ppm");  // 16:9
     renderer2.render(imgFile2);
 
     DBRT::Renderer renderer3(sceneFileName3);

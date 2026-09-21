@@ -58,3 +58,11 @@ float DBRT::ImageFile::computeMaxValues(const std::vector<Color3f> &buffer) cons
         maxValue = maxBlue;    
     return maxValue;
 }
+
+Color3f DBRT::ImageFile::linearToGammaSpace(const Color3f &color) const
+{
+    float r = sqrtf(color[0]);
+    float g = sqrtf(color[1]);
+    float b = sqrtf(color[2]);
+    return Color3f(r,g,b);
+}

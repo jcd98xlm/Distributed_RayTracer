@@ -31,6 +31,7 @@ namespace DBRT
         
         protected:
             float computeMaxValues(const std::vector<Color3f> &buffer) const;
+            Color3f linearToGammaSpace(const Color3f &color) const;
 
         public:
             unsigned int width, height;

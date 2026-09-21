@@ -98,6 +98,6 @@ void DBRT::BinaryPPM::bufferToImageFormat(const std::vector<Color3f> &buffer)
 {
     for(unsigned int i=0; i < this->height*this->width; i++)
     {
-        this->pixelData.at(i) = PixelRGB::floatToRGB(buffer.at(i));
+        this->pixelData.at(i) = PixelRGB::floatToRGB(linearToGammaSpace(buffer.at(i)));
     }
 }
