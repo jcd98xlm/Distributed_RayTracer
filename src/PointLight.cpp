@@ -50,18 +50,19 @@ bool DBRT::PointLight::computeIllumination(const Coord3f &intersectionPoint, con
     // onde L eh a cor do pixel, kd eh o coeficiente difuso, I eh a intensidade da luz, n eh a normal, l eh a direcao da luz
     float attenuation = (cosTheta > 0.0) ? cosTheta : 0.0;
 
+    color = this->lightColor;
+    intensity = this->lightIntensity*attenuation;
     if(attenuation > 0.0) 
     {
         // Tem iluminacao nesse ponto
-        color = this->lightColor;
-        intensity = this->lightIntensity*attenuation;
+        //color = this->lightColor;
+        //intensity = this->lightIntensity*attenuation;
         return true;
     }
     else
     {
-        color = this->lightColor;
-        intensity = 0.0;
+        //color = this->lightColor;
+        //intensity = 0.0;
         return false;
     }
-    return false;
 }

@@ -1,0 +1,11 @@
+#SCENEFILE
+nobjs 5
+obj type:plane transform: 0.0 -1.0 0.0 0.0 0.0 0.0 1.05 1.05 1.05 color: 1.0 1.0 1.0
+obj type:plane transform: 0.0 1.0 0.0 3.141593 0.0 0.0 1.05 1.05 1.05 color: 1.0 1.0 1.0
+obj type:plane transform: 0.0 0.0 -1.0 1.570796 0.0 0.0 1.05 1.05 1.05 color: 1.0 1.0 1.0
+obj type:plane transform: -1.0 0.0 0.0 0.0 0.0 -1.570769 1.05 1.05 1.05 color: 1.0 0.0 0.0
+obj type:plane transform: 1.0 0.0 0.0 0.0 0.0 1.570769 1.05 1.05 1.05 color: 0.0 1.0 0.0
+nlights 1
+light type:point position: 0.0 0.5 0.5 intensity: 1.0 color: 0.999 0.677 0.257
+camera position: 0.0 0.0 4.0 lookat: 0.0 0.0 1.0 updir: 0.0 1.0 0.0 horizsize: 0.451 aspectratio: 4.0 3.0
+background color: 0.80 0.1 0.6
