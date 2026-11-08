@@ -4,8 +4,9 @@ DBRT::Camera::Camera()
 {
     this->cameraPosition = Coord3f {0.0, -10.0, 0.0};
     this->cameraLookAt = Coord3f {0.0, 0.0, 0.0};
-    this->cameraUpDirection = Vec3f {0.0, 0.0, 1.0}; // 0 1 0
-    this->cameraLength = 1.0;
+    this->cameraUpDirection = Vec3f {0.0, 1.0, 0.0}; // 0 1 0
+    this->cameraFocalLength = 1.0;
+    this->cameraAperture = 1.0;
     this->cameraHorizontalSize = 1.0;
     this->cameraAspectRatio = 1.0;
 }
@@ -25,15 +26,16 @@ void DBRT::Camera::setUpDirection(const Vec3f &upDirection)
     this->cameraUpDirection = upDirection;
 }
 
-void DBRT::Camera::setLength(float newLength)
+void DBRT::Camera::setFocalLength(float newLength)
 {
-    this->cameraLength = newLength;
+    this->cameraFocalLength = newLength;
 }
 
-/* void DBRT::Camera::setHorizontalSize(unsigned int newHorizontalSize)
+void DBRT::Camera::setAperture(float newAperture)
 {
-    this->cameraHorizontalSize = newHorizontalSize;
-} */
+    this->cameraAperture = newAperture;
+}
+
 void DBRT::Camera::setHorizontalSize(float newHorizontalSize)
 {
     this->cameraHorizontalSize = newHorizontalSize;
@@ -74,9 +76,14 @@ Coord3f DBRT::Camera::getScreenCenter() const
     return this->projectionScreenCenter;
 }
 
-float DBRT::Camera::getLength() const
+float DBRT::Camera::getFocalLength() const
 {
-    return this->cameraLength;
+    return this->cameraFocalLength;
+}
+
+float DBRT::Camera::getAperture() const
+{
+    return this->cameraAperture;
 }
 
 /* unsigned int DBRT::Camera::getHorizontalSize() const
@@ -117,7 +124,7 @@ void DBRT::Camera::updateCameraGeometry()
     this->projectionScreenV = this->projectionScreenU.crossProduct(this->alignmentVector);
     this->projectionScreenV.normalize();
     // Calcular a posicao do ponto central da tela
-    this->projectionScreenCenter = this->cameraPosition + (this->cameraLength * this->alignmentVector);
+    this->projectionScreenCenter = this->cameraPosition + (this->cameraFocalLength * this->alignmentVector);
     //this->projectionScreenCenter = this->cameraPosition + (this->alignmentVector * this->cameraLength);
     // Modificar os vetores U e V para se adequar a proporcao de tela
     this->projectionScreenU = this->projectionScreenU * this->cameraHorizontalSize;
