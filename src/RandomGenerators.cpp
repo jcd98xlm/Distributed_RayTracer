@@ -1,6 +1,6 @@
 #include "RandomGenerators.hpp"
 
-Vec3f DBRT::random_in_unit_disk(IRNG &rng)
+Vec3f DBRT::IRNG::random_in_unit_disk(IRNG &rng)
 {
     while(true)
     {
@@ -11,7 +11,7 @@ Vec3f DBRT::random_in_unit_disk(IRNG &rng)
     }
 }
 
-Vec3f DBRT::random_in_unit_sphere(IRNG &rng)
+Vec3f DBRT::IRNG::random_in_unit_sphere(IRNG &rng)
 {
     while(true)
     {

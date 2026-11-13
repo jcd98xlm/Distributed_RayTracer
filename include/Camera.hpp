@@ -2,6 +2,7 @@
 #define __CAMERA_HPP__
 
 #include "Ray.hpp"
+#include "RandomGenerators.hpp"
 
 namespace DBRT
 {
@@ -31,6 +32,7 @@ namespace DBRT
             float getAspectRatio() const;
             
             bool generateRay(float projScreenX, float projScreenY, Ray &cameraRay);
+            bool generateRay(float projScreenX, float projScreenY, Ray &cameraRay, IRNG &sampler);
             void updateCameraGeometry();
         
         private:

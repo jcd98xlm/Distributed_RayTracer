@@ -11,10 +11,10 @@ namespace DBRT
         public:
             virtual ~IRNG() = default;
             virtual float get_float() = 0;
-    };
 
-    Vec3f random_in_unit_disk(IRNG &rng);
-    Vec3f random_in_unit_sphere(IRNG &rng);
+            Vec3f random_in_unit_disk(IRNG &rng);
+            Vec3f random_in_unit_sphere(IRNG &rng);
+    };    
 
     class MinStdGenerator : public IRNG
     {

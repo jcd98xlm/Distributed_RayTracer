@@ -113,6 +113,22 @@ bool DBRT::Camera::generateRay(float projScreenX, float projScreenY, Ray &camera
     return true;
 }
 
+bool DBRT::Camera::generateRay(float projScreenX, float projScreenY, Ray &cameraRay, IRNG &sampler)
+{
+    // Calcular a localizacao do ponto na tela em relacao as coordenadas globais
+    Vec3f screenWorldPart1 = this->projectionScreenCenter + (this->projectionScreenU * projScreenX);
+    Vec3f screenWorldCoordinate = screenWorldPart1 + (this->projectionScreenV * projScreenY);
+    // Gerar o ponto amostral na lente
+    Coord3f sampPointOffset = sampler.random_in_unit_disk(sampler);
+
+    // Calcular o raio usando o ponto amostral e o ponto focal
+    cameraRay.orig = this->cameraPosition + sampPointOffset;
+    cameraRay.dest = screenWorldCoordinate;
+    cameraRay.direction = screenWorldCoordinate - cameraRay.orig;
+
+    return true;
+}
+
 void DBRT::Camera::updateCameraGeometry()
 {
     // Calcular vetor da posicao da camera ate a posicao que estamos observada
