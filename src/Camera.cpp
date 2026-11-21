@@ -5,8 +5,9 @@ DBRT::Camera::Camera()
     this->cameraPosition = Coord3f {0.0, -10.0, 0.0};
     this->cameraLookAt = Coord3f {0.0, 0.0, 0.0};
     this->cameraUpDirection = Vec3f {0.0, 1.0, 0.0}; // 0 1 0
+    this->cameraFocusDistance = 9.5;//2.5
     this->cameraFocalLength = 1.0;
-    this->cameraAperture = 1.0;
+    this->cameraLensRadius = 0.05;
     this->cameraHorizontalSize = 1.0;
     this->cameraAspectRatio = 1.0;
 }
@@ -26,14 +27,19 @@ void DBRT::Camera::setUpDirection(const Vec3f &upDirection)
     this->cameraUpDirection = upDirection;
 }
 
+void DBRT::Camera::setFocusDistance(float newFocusDistance)
+{
+    this->cameraFocusDistance = newFocusDistance;
+}
+
 void DBRT::Camera::setFocalLength(float newLength)
 {
     this->cameraFocalLength = newLength;
 }
 
-void DBRT::Camera::setAperture(float newAperture)
+void DBRT::Camera::setLensRadius(float newLensRadius)
 {
-    this->cameraAperture = newAperture;
+    this->cameraLensRadius = newLensRadius;
 }
 
 void DBRT::Camera::setHorizontalSize(float newHorizontalSize)
@@ -76,20 +82,21 @@ Coord3f DBRT::Camera::getScreenCenter() const
     return this->projectionScreenCenter;
 }
 
+float DBRT::Camera::getFocusDistance() const
+{
+    return this->cameraFocusDistance;
+}
+
 float DBRT::Camera::getFocalLength() const
 {
     return this->cameraFocalLength;
 }
 
-float DBRT::Camera::getAperture() const
+float DBRT::Camera::getLensRadius() const
 {
-    return this->cameraAperture;
+    return this->cameraLensRadius;
 }
 
-/* unsigned int DBRT::Camera::getHorizontalSize() const
-{
-    return this->cameraHorizontalSize;
-} */
 float DBRT::Camera::getHorizontalSize() const
 {
     return this->cameraHorizontalSize;
@@ -102,13 +109,14 @@ float DBRT::Camera::getAspectRatio() const
 
 bool DBRT::Camera::generateRay(float projScreenX, float projScreenY, Ray &cameraRay)
 {
+    // Assumindo projScreenX e projScreenY estão normalizados entre -1 e 1
     // Calcular a localizacao do ponto na tela em relacao as coordenadas globais
     Vec3f screenWorldPart1 = this->projectionScreenCenter + (this->projectionScreenU * projScreenX);
     Vec3f screenWorldCoordinate = screenWorldPart1 + (this->projectionScreenV * projScreenY);
     // Calcular o raio usando esse ponto e a posicao da camera
     cameraRay.orig = this->cameraPosition;
     cameraRay.dest = screenWorldCoordinate;
-    cameraRay.direction = screenWorldCoordinate - this->cameraPosition;
+    cameraRay.direction = (screenWorldCoordinate - this->cameraPosition).normalize();
 
     return true;
 }
@@ -118,13 +126,27 @@ bool DBRT::Camera::generateRay(float projScreenX, float projScreenY, Ray &camera
     // Calcular a localizacao do ponto na tela em relacao as coordenadas globais
     Vec3f screenWorldPart1 = this->projectionScreenCenter + (this->projectionScreenU * projScreenX);
     Vec3f screenWorldCoordinate = screenWorldPart1 + (this->projectionScreenV * projScreenY);
-    // Gerar o ponto amostral na lente
-    Coord3f sampPointOffset = sampler.random_in_unit_disk(sampler);
 
+    // Calcular o ponto no plano focal para este pixel
+    Vec3f primaryRayDir = (screenWorldCoordinate - this->cameraPosition).normalize();
+    // Usa o cosseno do ângulo para projetar no plano focal paralelo à lente
+    float cosTheta = primaryRayDir.dotProduct(this->alignmentVector);
+    Coord3f focusPoint = this->cameraPosition + primaryRayDir*(this->cameraFocusDistance/cosTheta);
+
+    // TEMPORARIO, alterar na funcao updateCameraGeometry
+    Vec3f uNorm = this->projectionScreenU;
+    uNorm.normalize();
+    Vec3f vNorm = this->projectionScreenV;
+    vNorm.normalize();
+
+    // Gerar o ponto amostral na lente
+    Coord3f sampPoint = sampler.random_in_unit_disk(sampler) * this->cameraLensRadius;
+    Coord3f sampPointOffset = (uNorm*sampPoint.x) + (vNorm*sampPoint.y);
+    
     // Calcular o raio usando o ponto amostral e o ponto focal
-    cameraRay.orig = this->cameraPosition + sampPointOffset;
-    cameraRay.dest = screenWorldCoordinate;
-    cameraRay.direction = screenWorldCoordinate - cameraRay.orig;
+    cameraRay.orig = this->cameraPosition + sampPointOffset;    
+    cameraRay.dest = focusPoint;
+    cameraRay.direction = (focusPoint - cameraRay.orig).normalize();    
 
     return true;
 }
@@ -141,7 +163,6 @@ void DBRT::Camera::updateCameraGeometry()
     this->projectionScreenV.normalize();
     // Calcular a posicao do ponto central da tela
     this->projectionScreenCenter = this->cameraPosition + (this->cameraFocalLength * this->alignmentVector);
-    //this->projectionScreenCenter = this->cameraPosition + (this->alignmentVector * this->cameraLength);
     // Modificar os vetores U e V para se adequar a proporcao de tela
     this->projectionScreenU = this->projectionScreenU * this->cameraHorizontalSize;
     this->projectionScreenV = this->projectionScreenV * (this->cameraHorizontalSize / this->cameraAspectRatio);

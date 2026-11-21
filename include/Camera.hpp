@@ -15,8 +15,9 @@ namespace DBRT
             void setPosition(const Coord3f &newPosition);
             void setLookAt(const Coord3f &newLookAt);
             void setUpDirection(const Vec3f &updirection);
+            void setFocusDistance(float newViewFocusDistance);
             void setFocalLength(float newLength);
-            void setAperture(float newAperture);
+            void setLensRadius(float newAperture);
             void setHorizontalSize(float newHorizontalSize);
             void setAspectRatio(float newAspectRatio);
             
@@ -26,8 +27,9 @@ namespace DBRT
             Vec3f getUVec() const;
             Vec3f getVVec() const;
             Coord3f getScreenCenter() const;
+            float getFocusDistance() const;
             float getFocalLength() const;
-            float getAperture() const;
+            float getLensRadius() const;
             float getHorizontalSize() const;
             float getAspectRatio() const;
             
@@ -40,7 +42,8 @@ namespace DBRT
             Coord3f cameraLookAt;
             Vec3f cameraUpDirection;
             float cameraFocalLength;
-            float cameraAperture;
+            float cameraFocusDistance;
+            float cameraLensRadius;
             float cameraHorizontalSize;
             float cameraAspectRatio;
 

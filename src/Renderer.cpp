@@ -39,6 +39,8 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
     float xScaleFactor = 2.0/static_cast<float>(xSize);
     float yScaleFactor = 2.0/static_cast<float>(ySize);
     //float minDist = 1e6, maxDist = 0.0;
+
+    DBRT::MinStdGenerator randomGenerator(1234);
     for(unsigned int y=0; y<ySize; y++)
     {
         for(unsigned int x=0; x<xSize; x++)
@@ -48,7 +50,8 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
             float normalizedY = (static_cast<float>(y)*yScaleFactor) - 1.0;
 
             // Gerar o raio para este pixel
-            this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay);
+            //this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay);
+            this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay, randomGenerator);
 
             // TODO: posteriormente subtituir por um sistema de deteccao de colisoes
             // Testar interseccao com todos os objetos da cena
