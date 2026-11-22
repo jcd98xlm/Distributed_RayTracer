@@ -31,16 +31,17 @@ Color3f &DBRT::Scene::getBackgroundColor()
     return this->backgroundColor;
 }
 
-bool DBRT::Scene::generateScene(const std::string &fileName)
+DBRT::RendererConfig *DBRT::Scene::loadSceneFromFile(const std::string &fileName)
 {
     std::string line;
     std::ifstream inputFile(fileName);
     if(!inputFile.is_open())
     {
         std::cerr << "Nao foi possivel abrir o arquivo contendo a cena\n";
-        return false;
+        return nullptr;
     }
 
+    RendererConfig *configs = new RendererConfig();
     std::getline(inputFile,line);
     if(line.compare("#SCENEFILE") == 0)
     {
@@ -49,7 +50,36 @@ bool DBRT::Scene::generateScene(const std::string &fileName)
         {
             std::stringstream ss(line);
             ss >> line;
-            if(line.compare("nobjs") == 0)
+            if(line.compare("output") == 0)
+            {
+                ss >> line;
+                configs->outputFileName = line;
+                ss >> line;
+                if(line.compare("width:") == 0)
+                {
+                    ss >> configs->width;
+                    ss >> line;
+                    if(line.compare("height:") == 0)
+                    {
+                        ss >> configs->height;
+                    }
+                }
+            }            
+            else if(line.compare("random_generator:") == 0)
+            {
+                ss >> configs->rndGeneratorType;
+                ss >> line;
+                if(line.compare("seed:") == 0)
+                {
+                    ss >> configs->generatorSeed;
+                    ss >> line;
+                    if(line.compare("nsamples:") == 0)
+                    {
+                        ss >> configs->nSamplesPP;
+                    }
+                }
+            }
+            else if(line.compare("nobjs") == 0)
             {
                 int nobj;
                 ss >> nobj;
@@ -181,11 +211,12 @@ bool DBRT::Scene::generateScene(const std::string &fileName)
             else if(line.compare("camera") == 0)
             {
                 //std::cout << "Lendo camera: " << line << std::endl;
-                float x,y,z;
-                float lx,ly,lz;
-                float udx,udy,udz;
+                float x, y, z;
+                float lx, ly, lz;
+                float udx, udy, udz;
+                float focusDist, lensRadius;
                 float horSize;
-                float ratioup,ratiodown;
+                float ratioup, ratiodown;
                 ss >> line;
                 if(line.compare("position:") == 0)
                 {
@@ -208,18 +239,33 @@ bool DBRT::Scene::generateScene(const std::string &fileName)
                             sceneCamera.setUpDirection(Vec3f{udx, udy, udz});
 
                             ss >> line;
-                            if(line.compare("horizsize:") == 0)
+                            if(line.compare("focusdist:") == 0)
                             {
-                                ss >> horSize;
-                                //std::cout << "\tHorizontalSize lido: " << horSize << std::endl;
-                                sceneCamera.setHorizontalSize(horSize);
-                                    
+                                ss >> focusDist;
+                                sceneCamera.setFocusDistance(focusDist);
+
                                 ss >> line;
-                                if(line.compare("aspectratio:") == 0)
+                                if(line.compare("lensradius:") == 0)
                                 {
-                                    ss >> ratioup >> ratiodown;
-                                    //std::cout << "\tAspectRatio lido: " << ratioup << " " << ratiodown << "  ratio efetivo:" << ratioup/ratiodown << std::endl;
-                                    sceneCamera.setAspectRatio(ratioup/ratiodown);
+                                    ss >> lensRadius;
+                                    sceneCamera.setLensRadius(lensRadius);
+
+                                    ss >> line;
+                                    if(line.compare("horizsize:") == 0)
+                                    {
+                                        ss >> horSize;
+                                        //std::cout << "\tHorizontalSize lido: " << horSize << std::endl;
+                                        sceneCamera.setHorizontalSize(horSize);
+                                            
+                                        ss >> line;
+                                        if(line.compare("aspectratio:") == 0)
+                                        {
+                                            ss >> ratioup >> ratiodown;
+                                            //std::cout << "\tAspectRatio lido: " << ratioup << " " << ratiodown << "  ratio efetivo:" << ratioup/ratiodown << std::endl;
+                                            sceneCamera.setAspectRatio(ratioup/ratiodown);
+                                        }
+                                    }
+
                                 }
                             }
                         }
@@ -246,11 +292,11 @@ bool DBRT::Scene::generateScene(const std::string &fileName)
     else
     {    
         std::cout << "Arquivo invalido" << std::endl;
-        return false;
+        return nullptr;
     }
     
     inputFile.close();
-    return true;
+    return configs;
 }
 
 /*

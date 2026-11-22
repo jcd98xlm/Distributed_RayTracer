@@ -7,20 +7,28 @@
 #include "BinaryPPM.hpp"
 #include "Scene.hpp"
 
-
 namespace DBRT
 {
     class Renderer
     {
         public:
+            Renderer();
             Renderer(const std::string &fileName);
             ~Renderer();
 
-            bool render(ImageFile &outputImage);
+            bool loadScene(const std::string &fileName);
+            //void resetRenderer();
+            //bool render(ImageFile &outputImage);
+            bool render();
+
+        private:
+            void applyConfiguration(DBRT::RendererConfig &config);
 
         private:
             DBRT::Scene scene;
-            DBRT::BinaryPPM outputImage;
+            DBRT::ImageFile *outputImage;
+            unsigned int numSamplesPerPixel;
+            DBRT::IRNG *rndGenerator;
     };
 }
 

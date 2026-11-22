@@ -2,13 +2,24 @@
 #include <iostream>
 #include <chrono>
 
+DBRT::Renderer::Renderer()
+{
+    std::clog << "------------------------------------------------\n";
+    std::clog << "------------------- Renderer -------------------\n";
+    std::clog << "------------------------------------------------\n";
+}
+
 DBRT::Renderer::Renderer(const std::string &fileName)
 {
     std::clog << "------------------------------------------------\n";
     std::clog << "------------------- Renderer -------------------\n";
 
     std::clog << "---------------- Criando a cena ----------------\n";
-    this->scene.generateScene(fileName);
+    if(!this->loadScene(fileName))
+    {
+        std::cerr << "Erro: não foi possivel criar a cena";
+        exit(0);
+    }
     std::clog << "---------- " << fileName << " ----------\n";
     std::clog << "------------------------------------------------\n";
 }
@@ -17,14 +28,34 @@ DBRT::Renderer::~Renderer()
 {
 }
 
-bool DBRT::Renderer::render(ImageFile &outputImage)
+bool DBRT::Renderer::loadScene(const std::string &fileName)
+{
+    std::clog << "---------------- Criando a cena ----------------\n";
+    RendererConfig *config = this->scene.loadSceneFromFile(fileName);
+    if(config == nullptr)
+    {
+        std::cerr << "Erro: não foi possivel criar a cena";
+        exit(0);        
+    }
+    std::clog << "---------- " << fileName << " ----------\n";
+    std::clog << "------------------------------------------------\n";
+    this->applyConfiguration(*config);
+    return true;
+}
+
+/* void DBRT::Renderer::resetRenderer()
+{
+} */
+
+//bool DBRT::Renderer::render(ImageFile &outputImage)
+bool DBRT::Renderer::render()
 {
     std::clog << "--------------- Criando a imagem ---------------\n";
     auto stamp = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration;
 
-    unsigned int xSize = outputImage.getWidth();
-    unsigned int ySize = outputImage.getHeight();
+    unsigned int xSize = outputImage->getWidth();
+    unsigned int ySize = outputImage->getHeight();
 
     // Buffer local para a imagem
     std::vector<Color3f> imgBuffer(xSize*ySize, sizeof(Color3f));
@@ -40,7 +71,6 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
     float yScaleFactor = 2.0/static_cast<float>(ySize);
     //float minDist = 1e6, maxDist = 0.0;
 
-    DBRT::MinStdGenerator randomGenerator(1234);
     for(unsigned int y=0; y<ySize; y++)
     {
         for(unsigned int x=0; x<xSize; x++)
@@ -51,7 +81,7 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
 
             // Gerar o raio para este pixel
             //this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay);
-            this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay, randomGenerator);
+            this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay, *this->rndGenerator);
 
             // TODO: posteriormente subtituir por um sistema de deteccao de colisoes
             // Testar interseccao com todos os objetos da cena
@@ -140,13 +170,35 @@ bool DBRT::Renderer::render(ImageFile &outputImage)
     }
 
     // Passar o buffer da imagem para o objeto responsavel
-    outputImage.bufferToImageFormat(imgBuffer);
-    //outputImage.writeImageFile("rayTracingEsfera.ppm");
-    outputImage.writeImageFile();
-
+    outputImage->bufferToImageFormat(imgBuffer);
+    outputImage->writeImageFile();
     duration = std::chrono::high_resolution_clock::now() - stamp;
     std::cout << "Tempo gasto para renderizar a cena: " << duration.count() << " s\n";
     std::clog << "------------------------------------------------\n";
 
     return true;
+}
+
+void DBRT::Renderer::applyConfiguration(DBRT::RendererConfig &config)
+{
+    this->numSamplesPerPixel = config.nSamplesPP;
+    if(config.generatorSeed == 0)
+    {
+        if(config.rndGeneratorType.compare("ranlux48"))
+            this->rndGenerator = new DBRT::RanluxGenerator();
+        else if(config.rndGeneratorType.compare("mt19937"))
+            this->rndGenerator = new DBRT::MersenneTwisterGenerator();
+        else
+            this->rndGenerator = new DBRT::MinStdGenerator();
+    }
+    else
+    {
+        if(config.rndGeneratorType.compare("ranlux48"))
+            this->rndGenerator = new DBRT::RanluxGenerator(config.generatorSeed);
+        else if(config.rndGeneratorType.compare("mt19937"))
+            this->rndGenerator = new DBRT::MersenneTwisterGenerator(config.generatorSeed);
+        else
+            this->rndGenerator = new DBRT::MinStdGenerator(config.generatorSeed);
+    }
+    this->outputImage = new DBRT::BinaryPPM(config.width, config.height, config.outputFileName);
 }
