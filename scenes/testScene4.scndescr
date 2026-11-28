@@ -1,0 +1,59 @@
+#SCENEFILE
+output rayTracingEsfera4.ppm width: 1280 height: 720
+random_generator: minstd seed: 1234 nsamples: 1
+nobjs 51
+obj type:sphere transform: -3.0 -0.5 7.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.250908 0.901961 0.684314
+obj type:sphere transform: -1.5 -0.5 7.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.250908 0.501961 0.784314
+obj type:sphere transform: 0.0 -0.5 7.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 1.0 0.501961 0.0
+obj type:sphere transform: 1.5 -0.5 7.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.501961 0.0 0.501961
+obj type:sphere transform: 3.0 -0.5 7.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.250908 0.301961 0.984314
+obj type:sphere transform: -3.0 -0.4 6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6394 0.0250 0.2750
+obj type:sphere transform: -1.5 -0.4 6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2232 0.7365 0.6767
+obj type:sphere transform: 0.0 -0.4 6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8922 0.0869 0.4219
+obj type:sphere transform: 1.5 -0.4 6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.0298 0.2186 0.5054
+obj type:sphere transform: 3.0 -0.4 6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.0265 0.1988 0.6499
+obj type:sphere transform: -3.0 -0.3 4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.5449 0.2204 0.5893
+obj type:sphere transform: -1.5 -0.3 4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8094 0.0065 0.8058
+obj type:sphere transform: 0.0 -0.3 4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6981 0.3403 0.1555
+obj type:sphere transform: 1.5 -0.3 4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.9572 0.3366 0.0927
+obj type:sphere transform: 3.0 -0.3 4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.0967 0.8475 0.6037
+obj type:sphere transform: -3.0 -0.2 3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8071 0.7297 0.5362
+obj type:sphere transform: -1.5 -0.2 3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.9731 0.3785 0.5520
+obj type:sphere transform: 0.0 -0.2 3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8294 0.6185 0.8617
+obj type:sphere transform: 1.5 -0.2 3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.5774 0.7046 0.0458
+obj type:sphere transform: 3.0 -0.2 3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2279 0.2894 0.0798
+obj type:sphere transform: -3.0 -0.1 1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2328 0.1010 0.2780
+obj type:sphere transform: -1.5 -0.1 1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6357 0.3648 0.3702
+obj type:sphere transform: 0.0 -0.1 1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2095 0.2670 0.9367
+obj type:sphere transform: 1.5 -0.1 1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6480 0.6091 0.1711
+obj type:sphere transform: 3.0 -0.1 1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.7291 0.1634 0.3795
+obj type:sphere transform: -3.0 0.0 0.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.250908 0.901961 0.684314
+obj type:sphere transform: -1.5 0.0 0.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.250908 0.501961 0.784314
+obj type:sphere transform: 0.0 0.0 0.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 1.0 0.501961 0.0
+obj type:sphere transform: 1.5 0.0 0.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.501961 0.0 0.501961
+obj type:sphere transform: 3.0 0.0 0.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.250908 0.301961 0.984314
+obj type:sphere transform: -3.0 0.1 -1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6394 0.0250 0.2750
+obj type:sphere transform: -1.5 0.1 -1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2232 0.7365 0.6767
+obj type:sphere transform: 0.0 0.1 -1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8922 0.0869 0.4219
+obj type:sphere transform: 1.5 0.1 -1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.0298 0.2186 0.5054
+obj type:sphere transform: 3.0 0.1 -1.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.0265 0.1988 0.6499
+obj type:sphere transform: -3.0 0.2 -3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.5449 0.2204 0.5893
+obj type:sphere transform: -1.5 0.2 -3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8094 0.0065 0.8058
+obj type:sphere transform: 0.0 0.2 -3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6981 0.3403 0.1555
+obj type:sphere transform: 1.5 0.2 -3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.9572 0.3366 0.0927
+obj type:sphere transform: 3.0 0.2 -3.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.0967 0.8475 0.6037
+obj type:sphere transform: -3.0 0.3 -4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8071 0.7297 0.5362
+obj type:sphere transform: -1.5 0.3 -4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.9731 0.3785 0.5520
+obj type:sphere transform: 0.0 0.3 -4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.8294 0.6185 0.8617
+obj type:sphere transform: 1.5 0.3 -4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.5774 0.7046 0.0458
+obj type:sphere transform: 3.0 0.3 -4.5 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2279 0.2894 0.0798
+obj type:sphere transform: -3.0 0.4 -6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2328 0.1010 0.2780
+obj type:sphere transform: -1.5 0.4 -6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6357 0.3648 0.3702
+obj type:sphere transform: 0.0 0.4 -6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.2095 0.2670 0.9367
+obj type:sphere transform: 1.5 0.4 -6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.6480 0.6091 0.1711
+obj type:sphere transform: 3.0 0.4 -6.0 0.0 0.0 0.0 0.5 0.5 0.5 color: 0.7291 0.1634 0.3795
+obj type:plane transform: 0.0 -0.75 0.0 0.0 0.0 0.0 4.0 1.0 6.0 color: 0.501961 0.501961 0.501961
+nlights 1
+light type:point position: 5.0 10.0 5.0 intensity: 0.5 color: 1.0 1.0 1.0
+camera position: 0.0 2.0 10.0 lookat: 0.0 0.0 0.0 updir: 0.0 1.0 0.0 focusdist: 13.5 lensradius: 0.05 horizsize: 0.35 aspectratio: 16.0 9.0
+background color: 0.0 0.784314 0.0

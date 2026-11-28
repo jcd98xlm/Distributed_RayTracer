@@ -13,7 +13,8 @@ int main()
     std::string sceneFileName1 = "scenes/testScene1.scndescr";
     std::string sceneFileName2 = "scenes/testScene2.scndescr";
     std::string sceneFileName3 = "scenes/testScene3.scndescr";
-    std::string sceneFileName4 = "scenes/testCornellBox.scndescr";
+    std::string sceneFileName4 = "scenes/testScene4.scndescr";
+    std::string sceneFileName5 = "scenes/testCornellBox.scndescr";
 
     // Tamanhos 16:9  1280*720  1024*576  640*360
     DBRT::Renderer renderer = DBRT::Renderer();
@@ -32,23 +33,9 @@ int main()
     renderer4.loadScene(sceneFileName4);
     renderer4.render();
 
-    /* 
-    DBRT::Renderer renderer(sceneFileName1);
-    DBRT::BinaryPPM imgFile1(1280, 720, "rayTracingEsfera1.ppm");  // 16:9
-    renderer.render(imgFile1);
-
-    DBRT::Renderer renderer2(sceneFileName2);
-    DBRT::BinaryPPM imgFile2(640, 360, "rayTracingEsfera2.ppm");  // 16:9
-    renderer2.render(imgFile2);
-
-    DBRT::Renderer renderer3(sceneFileName3);
-    DBRT::BinaryPPM imgFile3(1024, 576, "rayTracingEsfera3.ppm");  // 16:9
-    renderer3.render(imgFile3);
-
-    DBRT::Renderer renderer4(sceneFileName4);
-    DBRT::BinaryPPM imgFile4(640, 480, "cornellBox.ppm");  // 4:3
-    renderer4.render(imgFile4); 
-    */
-
+    DBRT::Renderer renderer5 = DBRT::Renderer();
+    renderer5.loadScene(sceneFileName5);
+    renderer5.render();
+    
     return 0;
 }
