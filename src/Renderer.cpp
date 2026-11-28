@@ -79,8 +79,9 @@ bool DBRT::Renderer::render()
             float normalizedX = (static_cast<float>(x)*xScaleFactor) - 1.0;
             float normalizedY = (static_cast<float>(y)*yScaleFactor) - 1.0;
 
+            // TODO: adicionar jittering (anti-aliasing) 
+
             // Gerar o raio para este pixel
-            //this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay);
             this->scene.getCamera().generateRay(normalizedX, normalizedY, cameraRay, *this->rndGenerator);
 
             // TODO: posteriormente subtituir por um sistema de deteccao de colisoes

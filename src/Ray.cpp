@@ -8,7 +8,7 @@ DBRT::Ray::Ray(const Coord3f &_orig, const Coord3f &_dest)
 {
     this->orig = _orig;
     this->dest = _dest;
-    this->direction = _dest - _orig;
+    this->direction = (_dest - _orig).normalize();
 }
 
 Coord3f DBRT::Ray::getOrigPoint() const
